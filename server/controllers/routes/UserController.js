@@ -1,4 +1,4 @@
-const Users = require('./User/lib')
+const Users = require('../User/lib')
 
 // POST /users
 app.post('/users', users.addUsers)
