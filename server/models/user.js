@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const {Order} = require('./order')
 
-var Todo = mongoose.model('Todo', {
+var User = mongoose.model('Todo', {
     name: {
         type: String,
         required: true,
@@ -30,6 +31,10 @@ var Todo = mongoose.model('Todo', {
         type: Boolean,
         default: false
     },
+    orders: {
+        type: [Order],
+        default: []
+    }
 });
 
-module.exports = { Todo }
+module.exports = { User }
