@@ -7,13 +7,13 @@ var User = mongoose.model('Todo', {
         required: true,
         minLength: 1,
         trim: true
-    } ,
+    },
     firstname: {
         type: String,
         required: true,
         minLength: 1,
         trim: true
-    } ,
+    },
     email: {
         type: String,
         required: true,
@@ -21,12 +21,12 @@ var User = mongoose.model('Todo', {
         lowercase: true,
         minLength: 1,
         trim: true
-    } ,
+    },
     password: {
         type: String,
         required: true,
         minLength: 8,
-    } ,
+    },
     admin: {
         type: Boolean,
         default: false
