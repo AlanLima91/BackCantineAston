@@ -1,6 +1,7 @@
 const Menu = require('../../models/menu')
 
-function addMenu(req, res) {
+function addMenu(req, res)
+{
     var menu = new Menu({
         name: req.body.name,
         entree: req.body.entree,
