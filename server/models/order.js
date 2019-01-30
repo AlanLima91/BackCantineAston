@@ -1,15 +1,20 @@
 const mongoose = require('mongoose');
+const { Menu } = require('./menu');
+const { User } = require('./user');
 
-var Todo = mongoose.model('Todo', {
+var Order = mongoose.model('Order', {
     menu: {
-        menu
-    } ,
+        type: [Menu]
+    },
     user: {
-        user
-    } ,
+        type: User
+    },
     date: {
         // à définir
-    } ,
+    },
+    price: {
+
+    },
 });
 
-module.exports = { Todo }
+module.exports = { Order }
