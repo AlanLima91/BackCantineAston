@@ -6,13 +6,13 @@ var User = mongoose.model('Todo', {
         type: String,
         required: true,
         minLength: 1,
-        trim: true
+        trim: true,
     },
     firstname: {
         type: String,
         required: true,
         minLength: 1,
-        trim: true
+        trim: true,
     },
     email: {
         type: String,
@@ -20,7 +20,7 @@ var User = mongoose.model('Todo', {
         unique: true,
         lowercase: true,
         minLength: 1,
-        trim: true
+        trim: true,
     },
     password: {
         type: String,
@@ -29,11 +29,15 @@ var User = mongoose.model('Todo', {
     },
     admin: {
         type: Boolean,
-        default: false
+        default: false,
     },
     orders: {
         type: [Order],
-        default: []
+        default: [],
+    },
+    solde: {
+        type: Number,
+        default: 0,
     }
 });
 
