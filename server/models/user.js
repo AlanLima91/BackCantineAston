@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {Order} = require('./order')
+const {Order} = require('./order');
 
 var User = mongoose.model('Todo', {
     name: {

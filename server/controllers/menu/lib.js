@@ -16,5 +16,9 @@ function addMenu(req, res) {
         res.status(400).send(err);
     })
 }
+function getMenu(req, res) {
+    res.status(200).send({text: "getMenu"})
+    
+}
 
 exports.addMenu = addMenu;

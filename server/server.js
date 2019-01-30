@@ -7,6 +7,9 @@ const {mongoose} = require('./db/mongoose');
 
 var app = express();
 
+// Load and initialize the controllers.
+require('./lib/controllersLoader')(app);
+
 // middleware décodant le json inclu dans le body des  requêtes
 app.use(bodyParser.json());
 
