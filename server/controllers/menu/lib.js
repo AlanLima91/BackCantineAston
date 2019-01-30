@@ -1,8 +1,11 @@
-const Menu = require('../../models/menu');
-const {ObjectID} = require('mongodb');
+const _= require('lodash');
+const { ObjectID } = require('mongodb');
+const { Menu } = require('../../models/menu');
 
 // CREATE
 function addMenu(req, res) {
+    console.log('req.body',req.body);
+    
     var menu = new Menu({
         name: req.body.name,
         entree: req.body.entree,
@@ -37,7 +40,7 @@ function getOneMenu(req, res) {
         if (!menu) {
             return res.status(404).send()
         }
-        res.status(200).send({todo})
+        res.status(200).send({menu})
     })
     .catch( err => {
         res.status(400).send(err)
