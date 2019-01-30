@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const Users         = require('../../models/User');
+=======
+// const Users         = require('../../models/user');
+>>>>>>> de27dcc40ad251f9003205811c31d4b97ba2b987
 const { ObjectID }  = require('mongodb');
 
 function addUsers(req, res)
@@ -69,6 +73,6 @@ function patchUsers(req, res)
 
 exports.addUsers    = addUsers;
 exports.getUsers    = getUsers;
-exports.getUser     = getuser;
+exports.getUser     = getUser;
 exports.deleteUsers = deleteUsers;
 exports.patchUsers  = patchUsers;

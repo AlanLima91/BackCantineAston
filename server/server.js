@@ -3,15 +3,21 @@ const bodyParser    = require('body-parser');
 const _             = require('lodash');
 const { ObjectID }  = require('mongodb');
 const { mongoose }  = require('./db/mongoose');
+<<<<<<< HEAD
+=======
+// const { User }      = require('./models/user');
+// const { Order }     = require('./models/order');
+>>>>>>> de27dcc40ad251f9003205811c31d4b97ba2b987
 
 
 var app = express();
 
-// Load and initialize the controllers.
-require('./lib/controllersLoader')(app);
 
 // middleware décodant le json inclu dans le body des  requêtes
 app.use(bodyParser.json());
+
+// Load and initialize the controllers.
+require('./lib/controllersLoader')(app);
 
 app.get('/', (req, res) => {
     res.status(200).send('Server listening !')
