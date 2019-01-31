@@ -11,13 +11,14 @@ function addOrder(req, res) {
     var userId = req.body.user;
     var menusId = req.body.menus;
 
-    if ( !ObjectID.isValid(userId)) {
+    if ( !ObjectID.isValid(userId))
         res.status(400).send()
-    } else {
+    else
+    {
         User.findById(userId).then(user => {
-            if(!user) {
+            if(!user)
                 res.status(404).send()
-            } else {
+            else {
                 menusId.forEach(singleMenu => {
                     if( !ObjectID.isValid(singleMenu)) {
                         res.status(400).send();
