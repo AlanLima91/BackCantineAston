@@ -4,7 +4,7 @@ var Order = mongoose.model('Order', {
     menus: {
         type: [String]
     },
-    userKey: {
+    user: {
         type: String,
     },
     date: {

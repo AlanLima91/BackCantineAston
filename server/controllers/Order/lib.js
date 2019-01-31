@@ -9,33 +9,38 @@ function addOrder(req, res) {
     console.log('req.body',req.body);
 
     var userId = req.body.user;
-    var menuId = req.body.menu;
+    var menusId = req.body.menus;
 
-    if ( !ObjectID.isValid(userId) || !ObjectID.isValid(menuId)) {
+    if ( !ObjectID.isValid(userId)) {
         res.status(400).send()
     } else {
         User.findById(userId).then(user => {
             if(!user) {
                 res.status(404).send()
             } else {
-                Menu.findById(menuId).then(menu => {
-                    if(!menu) {
-                        res.status(404).send()
+                menusId.forEach(singleMenu => {
+                    if( !ObjectID.isValid(singleMenu)) {
+                        res.status(400).send();
                     } else {
-                        var order = new Order({
-                            menu: menuId,
-                            user: userId,
-                            date: req.body.date,
-                            price: req.body.price,
-                        });
-                    
-                        order.save().then(doc => {
-                            res.status(200).send(doc);
-                        }).catch(err => {
-                            res.status(400).send(err);
-                        })
+                        Menu.findById(singleMenu).then(menu => {
+                            if(!menu) {
+                                res.status(404).send();
+                            } 
+                        }).catch(err => { res.status(400).send(err) }) // !# Menu.findById() 
                     }
-                }).catch(err => { res.status(400).send(err) }) // !# Menu.findById()
+                }); // !# menusId.forEach()
+                var order = new Order({
+                    menu: menusId,
+                    user: userId,
+                    date: req.body.date,
+                    price: req.body.price,
+                });
+            
+                order.save().then(doc => {
+                    res.status(200).send(doc);
+                }).catch(err => {
+                    res.status(400).send(err);
+                })
             }
         }).catch(err => { res.status(400).send(err) }) // !# User.findById()
     }
@@ -56,10 +61,10 @@ function getOneOrder(req, res) {
         return res.status(404).send()
     }
     Order.findById(id).then( order => {
-        if (!menu) {
+        if (!order) {
             return res.status(404).send()
         }
-        res.status(200).send({menu})
+        res.status(200).send({order})
     })
     .catch( err => {
         res.status(400).send(err)
@@ -67,35 +72,54 @@ function getOneOrder(req, res) {
 }
 
 // UPDATE
-function editMenu(req, res) {  
+function editOrder(req, res) {  
     var id = req.params.id;
-    var body = _.pick(req.body, ['name', 'entree', 'plat', 'dessert', 'day', 'price'])
+    var userId = req.body.user;
+    var menusId = req.body.menus;
+    var body = _.pick(req.body, ['menus', 'user', 'date', 'price'])
 
     if(!ObjectID.isValid(id)) {
         return res.status(404).send();
-    }
-
-    Menu.findByIdAndUpdate(id, {$set: body}, {new: true})
-        .then(menu => {
-            if(!menu) {
-                return res.status(404).send()
+    } else {
+        User.findById(userId).then(user => {
+            if(!user) {
+                res.status(404).send()
+            } else {
+                menusId.forEach(singleMenu => {
+                    if( !ObjectID.isValid(singleMenu)) {
+                        res.status(400).send();
+                    } else {
+                        Menu.findById(singleMenu).then(menu => {
+                            if(!menu) {
+                                res.status(404).send();
+                            } 
+                        }).catch(err => { res.status(400).send(err) }) // !# Menu.findById() 
+                    }
+                }); // !# menusId.forEach()
             }
-            res.status(200).send({menu});
-        }).catch(err => res.status(400).send())
+            Order.findByIdAndUpdate(id, {$set: body}, {new: true})
+                .then(order => {
+                    if(!order) {
+                        return res.status(404).send()
+                    }
+                    res.status(200).send({order});
+                }).catch(err => res.status(400).send())
+        }).catch(err => { res.status(400).send(err) }) // !# User.findById()
+    }
 }
 
 // DELETE
-function deleteMenu(req, res) {
+function deleteOrder(req, res) {
     var id = req.params.id;
     if(!ObjectID.isValid(id)) {
         return res.status(404).send()
     }
-    Menu.findByIdAndDelete(id).then(menu => {
+    Order.findByIdAndDelete(id).then(order => {
         //findByIdAndDelete renvoie l'objet supprimé
-        if(!menu) {
+        if(!order) {
             return res.status(404).send();
         }
-        res.status(200).send({menu});
+        res.status(200).send({order});
     }).catch( err => {
         res.status(400).send()
     })
@@ -103,8 +127,8 @@ function deleteMenu(req, res) {
 }
 
 
-exports.addMenu = addMenu;
-exports.getMenus = getMenus;
-exports.getOneMenu = getOneMenu;
-exports.editMenu = editMenu;
-exports.deleteMenu = deleteMenu;
+exports.addOrder = addOrder;
+exports.getOrders = getOrders;
+exports.getOneOrder = getOneOrder;
+exports.editOrder = editOrder;
+exports.deleteOrder = deleteOrder;
