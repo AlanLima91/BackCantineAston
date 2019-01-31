@@ -1,18 +1,18 @@
-const Users = require('../User/lib')
+const User = require('../User/lib')
 
 module.exports = function (app) {
     // POST /users
-    app.post('/users', Users.addUsers)
+    app.post('/users', User.addUsers)
 
     // GET /users
-    app.get('/users', Users.getUsers)
+    app.get('/users', User.getUsers)
 
     // GET /users/id
-    app.get('users/:id', Users.getUser)
+    app.get('/users/:id', User.getUser)
 
     // DELETE /users/id
-    app.delete('users/:id', Users.deleteUsers)
+    app.delete('/users/:id', User.deleteUsers)
 
     // PATCH /users/id
-    app.patch('users/:id', Users.patchUsers)
+    app.patch('/users/:id', User.patchUsers)
 }

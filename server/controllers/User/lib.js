@@ -1,6 +1,7 @@
-const { User }         = require('../../models/User');
+const { User }     = require('../../models/User');
+const _            = require('lodash');
 const { mongoose } = require('./../../db/mongoose');
-const { ObjectID }  = require('mongodb');
+const { ObjectID } = require('mongodb');
 
 function addUsers(req, res)
 {
