@@ -7,6 +7,13 @@ var app = express();
 // middleware décodant le json inclu dans le body des  requêtes
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', '*');
+    next();
+  })
+
 // Load and initialize the controllers.
 require('./lib/controllersLoader')(app);
 
