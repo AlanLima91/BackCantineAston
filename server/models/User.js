@@ -31,7 +31,7 @@ var User = mongoose.model('User', {
         type: Boolean,
         default: false,
     },
-    orders: {
+    orderKeys: {
         type: [String],
         default: [],
     },

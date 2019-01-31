@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
-const { Menu } = require('./Menu');
-const { User } = require('./User');
 
 var Order = mongoose.model('Order', {
-    menu: {
+    menus: {
         type: [String]
     },
-    user: {
+    userKey: {
         type: String,
     },
     date: {
