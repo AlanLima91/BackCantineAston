@@ -1,18 +1,18 @@
 const orders = require('../Order/lib')
 
 module.exports = function (app) {
-    // POST /menus
-    app.post('/menus', orders.addOrder)
+    // POST /orders
+    app.post('/orders', orders.addOrder)
 
-    //GET /menus
-    app.get('/menus', orders.getOrders)
+    //GET /orders
+    app.get('/orders', orders.getOrders)
 
-    // GET /menus/id
-    app.get('/menus/:id', orders.getOneOrder)
+    // GET /orders/id
+    app.get('/orders/:id', orders.getOneOrder)
 
-    // PATCH /menus/id
-    app.patch('/menus/:id', orders.editOrder)
+    // PATCH /orders/id
+    app.patch('/orders/:id', orders.editOrder)
 
-    // DELETE /menus/id
-    app.delete('/menus/:id', orders.deleteOrder)
+    // DELETE /orders/id
+    app.delete('/orders/:id', orders.deleteOrder)
 }
