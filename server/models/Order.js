@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 var Order = mongoose.model('Order', {
-    menus: {
+    menuKeys: {
         type: [String]
     },
-    user: {
+    userKey: {
         type: String,
     },
     date: {
