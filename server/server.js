@@ -3,8 +3,10 @@ const bodyParser    = require('body-parser');
 const _             = require('lodash');
 const { ObjectID }  = require('mongodb');
 const { mongoose }  = require('./db/mongoose');
-const { User }      = require('./models/user');
-const { Order }     = require('./models/order');
+
+const { User }      = require('./models/User');
+const { Order }     = require('./models/Order');
+
 
 
 var app = express();

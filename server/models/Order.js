@@ -1,19 +1,19 @@
 const mongoose = require('mongoose');
-const { Menu } = require('./menu');
-const { User } = require('./user');
+const { Menu } = require('./Menu');
+const { User } = require('./User');
 
 var Order = mongoose.model('Order', {
     menu: {
-        type: [Menu]
+        type: [String]
     },
     user: {
-        type: User
+        type: String,
     },
     date: {
-        // à définir
+        type: Date,
     },
     price: {
-
+        type: Number,
     },
 });
 

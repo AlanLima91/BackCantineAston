@@ -1,6 +1,6 @@
 const _= require('lodash');
 const { ObjectID } = require('mongodb');
-const { Menu } = require('../../models/menu');
+const { Menu } = require('../../models/Menu');
 
 // CREATE
 function addMenu(req, res) {

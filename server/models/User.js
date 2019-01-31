@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const {Order} = require('./order');
+const {Order} = require('./Order');
 
-var User = mongoose.model('Todo', {
+var User = mongoose.model('User', {
     name: {
         type: String,
         required: true,
@@ -32,7 +32,7 @@ var User = mongoose.model('Todo', {
         default: false,
     },
     orders: {
-        type: [Order],
+        type: [String],
         default: [],
     },
     solde: {
