@@ -8,11 +8,11 @@ module.exports = function (app) {
     app.get('/users', Users.getUsers)
 
     // GET /users/id
-    app.get('users/:id', Users.getUser)
+    app.get('/users/:id', Users.getUser)
 
     // DELETE /users/id
-    app.delete('users/:id', Users.deleteUsers)
+    app.delete('/users/:id', Users.deleteUsers)
 
     // PATCH /users/id
-    app.patch('users/:id', Users.patchUsers)
+    app.patch('/users/:id', Users.patchUsers)
 }
