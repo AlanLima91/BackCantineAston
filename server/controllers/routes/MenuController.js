@@ -1,18 +1,18 @@
-const menus = require('../Menu/lib')
+const { Menu } = require('../Menu/lib')
 
 module.exports = function (app) {
     // POST /menus
-    app.post('/menus', menus.addMenu)
+    app.post('/menus', Menu.addMenu)
 
     //GET /menus
-    app.get('/menus', menus.getMenus)
+    app.get('/menus', Menu.getMenus)
 
     // GET /menus/id
-    app.get('/menus/:id', menus.getOneMenu)
+    app.get('/menus/:id', Menu.getOneMenu)
 
     // PATCH /menus/id
-    app.patch('/menus/:id', menus.editMenu)
+    app.patch('/menus/:id', Menu.editMenu)
 
     // DELETE /menus/id
-    app.delete('/menus/:id', menus.deleteMenu)
+    app.delete('/menus/:id', Menu.deleteMenu)
 }
