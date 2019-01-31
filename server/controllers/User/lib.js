@@ -1,9 +1,10 @@
-const Users         = require('../../models/User');
+const { User }         = require('../../models/User');
+const { mongoose } = require('./../../db/mongoose');
 const { ObjectID }  = require('mongodb');
 
 function addUsers(req, res)
 {
-    var user = new Users({
+    var user = new User({
         name: req.body.name,
         firstname: req.body.firstname,
         email: req.body.email,
@@ -20,7 +21,7 @@ function addUsers(req, res)
 
 function getUsers(req, res)
 {
-    Users.find().then(users => {
+    User.find().then(users => {
         res.status(200).send({users});
       }).catch(err => {
         res.status(400).send(err);
@@ -32,10 +33,10 @@ function getUser(req, res)
     var id = req.params.id;
     if (!ObjectID.isValid(id))
       return res.status(404).send();
-    Todo.findById(id).then(todo => {
-      if (!todo)
+    User.findById(id).then(user => {
+      if (!user)
         return res.status(404).send();
-      res.status(200).send({todo});
+      res.status(200).send({user});
     }).catch(err => {
       res.status(400).send(err);
     })
@@ -46,7 +47,7 @@ function deleteUsers(req, res)
     var id = req.params.id;
     if (!ObjectID.isValid(id))
       return res.status(404).send();
-    Users.findByIdAndDelete(id).then(user => {
+    User.findByIdAndDelete(id).then(user => {
       if (!user)
         return res.status(404).send();
       res.status(200).send({user});
@@ -60,7 +61,7 @@ function patchUsers(req, res)
   
     if (!ObjectID.isValid(id))
       return res.status(404).send();
-    Todo.findByIdAndUpdate(id, {$set: body}, {new: true}).then(user => {
+    User.findByIdAndUpdate(id, {$set: body}, {new: true}).then(user => {
       if (!user)
         return res.status(404).send();
       res.status(200).send({user});
