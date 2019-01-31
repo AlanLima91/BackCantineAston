@@ -1,4 +1,4 @@
-const { Menu } = require('../Menu/lib')
+const Menu = require('../Menu/lib')
 
 module.exports = function (app) {
     // POST /menus
