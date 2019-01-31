@@ -1,26 +1,45 @@
 const _= require('lodash');
 const { ObjectID } = require('mongodb');
 const { Order } = require('../../models/Order');
+const { User } = require('../../models/Order');
+const { Menu } = require('../../models/Order');
 
 // CREATE
 function addOrder(req, res) {
     console.log('req.body',req.body);
-    
-    var order = new Order({
-        menu: req.body.menu,
-        user: req.body.user,
-        date: req.body.date,
-        price: req.body.price,
-    });
 
-    
+    var userId = req.body.user;
+    var menuId = req.body.menu;
 
-    order.save().then(doc => {
-        res.status(200).send(doc);
-    }).catch(err => {
-        res.status(400).send(err);
-    })
-}
+    if ( !ObjectID.isValid(userId) || !ObjectID.isValid(menuId)) {
+        res.status(400).send()
+    } else {
+        User.findById(userId).then(user => {
+            if(!user) {
+                res.status(404).send()
+            } else {
+                Menu.findById(menuId).then(menu => {
+                    if(!menu) {
+                        res.status(404).send()
+                    } else {
+                        var order = new Order({
+                            menu: menuId,
+                            user: userId,
+                            date: req.body.date,
+                            price: req.body.price,
+                        });
+                    
+                        order.save().then(doc => {
+                            res.status(200).send(doc);
+                        }).catch(err => {
+                            res.status(400).send(err);
+                        })
+                    }
+                }).catch(err => { res.status(400).send(err) }) // !# Menu.findById()
+            }
+        }).catch(err => { res.status(400).send(err) }) // !# User.findById()
+    }
+} // !#addOrder()
 
 // READ
 function getOrders(req, res) {
@@ -36,7 +55,7 @@ function getOneOrder(req, res) {
     if(!ObjectID.isValid(id)) {
         return res.status(404).send()
     }
-    Menu.findById(id).then(menu => {
+    Order.findById(id).then( order => {
         if (!menu) {
             return res.status(404).send()
         }
