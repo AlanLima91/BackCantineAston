@@ -56,7 +56,7 @@ function deleteUsers(req, res)
 function patchUsers(req, res)
 {
     var id = req.params.id;
-    var body = _.pick(req.body, ['name', 'firstname', 'email', 'password', 'admin', 'orders', 'solde']);
+    var body = _.pick(req.body, ['name', 'firstname', 'email', 'password', 'admin', 'orderKeys', 'solde']);
   
     if (!ObjectID.isValid(id))
       return res.status(404).send();
