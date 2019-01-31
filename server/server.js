@@ -4,13 +4,7 @@ const _             = require('lodash');
 const { ObjectID }  = require('mongodb');
 const { mongoose }  = require('./db/mongoose');
 
-const { User }      = require('./models/User');
-const { Order }     = require('./models/Order');
-
-
-
 var app = express();
-
 
 // middleware décodant le json inclu dans le body des  requêtes
 app.use(bodyParser.json());
