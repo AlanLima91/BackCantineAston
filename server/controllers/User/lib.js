@@ -3,22 +3,34 @@ const _            = require('lodash');
 const { mongoose } = require('./../../db/mongoose');
 const { ObjectID } = require('mongodb');
 
-function addUsers(req, res)
+function signUp(req, res)
 {
-    var user = new User({
-        name: req.body.name,
-        firstname: req.body.firstname,
-        email: req.body.email,
-        password: req.body.password,
-        admin: req.body.admin,
-    });
-
-    user.save().then(doc => {
-        res.status(200).send(doc);
-    }).catch(err => {
-        res.status(400).send(err);
-    })
+  var body = _.pick(req.body, ['name', 'firstname','email', 'password', 'admin']);
+  var user = new User(body);
+  
+  user.save().then(doc => {
+      res.status(200).send(doc);
+  }).catch(err => {
+      res.status(400).send(err);
+  })
 }
+
+function logIn(req, res) {
+  var body = _.pick(req.body, ['email', 'password']);
+  
+  User.findByCredentials(body.email, body.password)
+    .then(user => {
+      //res.status(200).send(user);
+      user.generateAuthToken().then(token => {
+        res.header('x-auth', token).send(user);
+      })
+    })
+    .catch(err => {
+      res.status(400).send();
+    })
+  
+}
+
 
 function getUsers(req, res)
 {
@@ -41,6 +53,10 @@ function getUser(req, res)
     }).catch(err => {
       res.status(400).send(err);
     })
+}
+
+function getMe(req, res) {
+  res.send(req.user);
 }
 
 function deleteUsers(req, res)
@@ -69,8 +85,10 @@ function patchUsers(req, res)
     }).catch(err => res.status(400).send());
 }
 
-exports.addUsers    = addUsers;
+exports.signUp      = signUp;
+exports.logIn       = logIn;
 exports.getUsers    = getUsers;
 exports.getUser     = getUser;
+exports.getMe     = getMe;
 exports.deleteUsers = deleteUsers;
 exports.patchUsers  = patchUsers;
