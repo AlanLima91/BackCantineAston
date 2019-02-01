@@ -61,7 +61,7 @@ function patchUsers(req, res)
     var body = _.pick(req.body, ['name', 'firstname', 'email', 'password', 'admin', 'orderKeys', 'solde']);
   
     if (!ObjectID.isValid(id))
-      return res.status(404).send();
+      return res.status(400).send();
     User.findByIdAndUpdate(id, {$set: body}, {new: true}).then(user => {
       if (!user)
         return res.status(404).send();

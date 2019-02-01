@@ -25,7 +25,7 @@ var User = mongoose.model('User', {
     password: {
         type: String,
         required: true,
-        minLength: 8,
+        minLength: 1,
     },
     admin: {
         type: Boolean,
