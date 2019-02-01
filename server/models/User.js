@@ -38,7 +38,17 @@ var User = mongoose.model('User', {
     solde: {
         type: Number,
         default: 0,
-    }
+    },
+    tokens: [{
+        access: {
+            type: String,
+            required: true,
+        },
+        token: {
+            type: String,
+            required: true,
+        }
+    }],
 });
 
 module.exports = { User }
