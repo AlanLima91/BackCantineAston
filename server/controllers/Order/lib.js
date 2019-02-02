@@ -6,49 +6,22 @@ const { Menu } = require('../../models/Menu');
 
 // CREATE
 function addOrder(req, res) {
-    console.log('req.body',req.body);
+    // console.log('req.body',req.body);
 
-    var userId = new ObjectID(req.body.userKey);
+    var userId = req.body.userKey;
     var menusId = req.body.menuKeys
     // var menusId = req.body.menuKeys;
 
-    console.log(menusId);
+    // console.log(menusId);
     
     if ( !ObjectID.isValid(userId))
         res.status(400).send({text: 'userId is not valid'})
     else
     {
-        User.findById(userId.toHexString()).then(user => {
+        User.findById(userId).then(user => {
             if(!user)
                 res.status(404).send();
             else {
-                console.log('user finded');
-                // res.send('blabla');
-                // menusId.forEach(singleMenu => {
-                //     console.log('entry in foreach');
-                    
-                //     if( !ObjectID.isValid(singleMenu)) {
-                //         res.status(400).send({
-                //             id: singleMenu,
-                //             text: "this menuId is not valid"
-                //         });
-                //     } else {
-                //         console.log('menu id is valid');
-                //         // res.send('menu id valid')
-                        
-                //         Menu.findById(singleMenu.toHexString()).then(menu => {
-                //             console.log('entry in menu find');
-                            
-                //             if(!menu) {
-                //                 res.status(404).send();
-                //             } 
-                //         }).catch(err => { res.status(400).send({
-                //             error: err,
-                //             text: 'error at Menu findByID'
-                //         }) }) // !# Menu.findById() 
-                //     }
-                // }); // !# menusId.forEach()
-                // log('menus verified')
                 var order = new Order({
                     menuKeys: menusId,
                     userKey: userId,
@@ -107,30 +80,32 @@ function editOrder(req, res) {
     if(!ObjectID.isValid(id)) {
         return res.status(400).send();
     } else {
-        User.findById(userId).then(user => {
-            if(!user) {
-                res.status(404).send()
-            } else {
-                menusId.forEach(singleMenu => {
-                    if( !ObjectID.isValid(singleMenu)) {
-                        res.status(400).send();
-                    } else {
-                        Menu.findById(singleMenu).then(menu => {
-                            if(!menu) {
-                                res.status(404).send();
-                            } 
-                        }).catch(err => { res.status(400).send(err) }) // !# Menu.findById() 
-                    }
-                }); // !# menusId.forEach()
-            }
-            Order.findByIdAndUpdate(id, {$set: body}, {new: true})
-                .then(order => {
-                    if(!order) {
-                        return res.status(404).send()
-                    }
-                    res.status(200).send({order});
-                }).catch(err => res.status(400).send())
-        }).catch(err => { res.status(400).send(err) }) // !# User.findById()
+        if(req.body.userKey) {
+            User.findById(userId).then(user => {
+                if(!user) {
+                    res.status(404).send('utilisateur non trouvé')
+                }
+            }).catch(err => { res.status(400).send(err) }) // !# User.findById()
+        } else if (menusId){
+            menusId.forEach(singleMenu => {
+                if( !ObjectID.isValid(singleMenu)) {
+                    res.status(400).send('menu invalide');
+                } else {
+                    Menu.findById(singleMenu).then(menu => {
+                        if(!menu) {
+                            res.status(404).send('menu non trouvé');
+                        } 
+                    }).catch(err => { res.status(400).send(err) }) // !# Menu.findById() 
+                }
+            }); // !# menusId.forEach()
+        }
+        Order.findByIdAndUpdate(id, {$set: body}, {new: true})
+            .then(order => {
+                if(!order) {
+                    return res.status(404).send('commande non trouvé')
+                }
+                res.status(200).send({order});
+            }).catch(err => res.status(400).send())
     }
 }
 

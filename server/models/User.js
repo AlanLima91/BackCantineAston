@@ -3,6 +3,7 @@ const _ = require('lodash')
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs')
+const {ObjectID} = require('mongodb')
 
 var UserSchema = new mongoose.Schema({
     name: {
@@ -49,12 +50,9 @@ var UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    orderKeys: [{
-        token: {
-            type: String,
-            default: null
-        }
-    }],
+    orderKeys: {
+        type: [String]
+    },
     solde: {
         type: Number,
         default: 0,
@@ -133,7 +131,7 @@ UserSchema.statics.findByToken = function (token) {
 // mongoose middleware
 UserSchema.pre('save', function (next) {
     var user = this; //context binding
-    console.log(user);
+    // console.log(user);
 
     // détecte l'insertion ou mise à jour d'un nouveau password
     if (user.isModified('password')) {

@@ -4,7 +4,7 @@ const { Menu } = require('../../models/Menu');
 
 // CREATE
 function addMenu(req, res) {
-    console.log('req.body',req.body);
+    // console.log('req.body',req.body);
     
     var menu = new Menu({
         name: req.body.name,
@@ -34,7 +34,7 @@ function getMenus(req, res) {
 function getOneMenu(req, res) {
     var id = req.params.id;
     if(!ObjectID.isValid(id)) {
-        return res.status(404).send()
+        return res.status(400).send()
     }
     Menu.findById(id).then(menu => {
         if (!menu) {
@@ -53,7 +53,7 @@ function editMenu(req, res) {
     var body = _.pick(req.body, ['name', 'entree', 'plat', 'dessert', 'day', 'price'])
 
     if(!ObjectID.isValid(id)) {
-        return res.status(404).send();
+        return res.status(400).send();
     }
 
     Menu.findByIdAndUpdate(id, {$set: body}, {new: true})
@@ -69,7 +69,7 @@ function editMenu(req, res) {
 function deleteMenu(req, res) {
     var id = req.params.id;
     if(!ObjectID.isValid(id)) {
-        return res.status(404).send()
+        return res.status(400).send()
     }
     Menu.findByIdAndDelete(id).then(menu => {
         //findByIdAndDelete renvoie l'objet supprimé
