@@ -7,6 +7,9 @@ module.exports = function (app) {
     //GET /menus
     app.get('/menus', Menu.getMenus)
 
+    // GET /menus/day
+    app.get('/menus/:prop=:value', Menu.getMenusByProps)
+    
     // GET /menus/id
     app.get('/menus/:id', Menu.getOneMenu)
 

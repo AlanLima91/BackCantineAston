@@ -122,6 +122,37 @@ describe('----------------------------------------MENU--------------------------
                 .end(done);
         })
     })
+
+    describe('GET /menus/prop=value', () => {
+        it('doit retourner les menu selon les paramètres demandé en URL', (done) => {
+            var i = 0
+            request(app)
+                .get(`/menus/day=Mardi`)
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.menus[0].name).toBe(menus[0].name);
+                    expect(res.body.menus[0].entree).toBe(menus[0].entree);
+                    expect(res.body.menus[0].plat).toBe(menus[0].plat);
+                    expect(res.body.menus[0].dessert).toBe(menus[0].dessert);
+                    expect(res.body.menus[0].day).toBe(menus[0].day);
+                    expect(res.body.menus[0].price).toBe(menus[0].price);
+                })
+                .end(done)
+        })
+    
+        it('doit retourner 404 si le menu n\'est pas trouvé', (done) => {
+            request(app)
+                .get(`/menus/day=Lundi`)
+                .expect(404)
+                .end(done);
+        })
+        it('doit retourner 400 si le jour n\'est pas conforme', (done) => {
+            request(app)
+                .get(`/menus/mercredi`)
+                .expect(400)
+                .end(done);
+        })
+    })
     
     describe( 'PATCH /menus/id', () => {
         it('doit mettre à jour le menu', (done) => {

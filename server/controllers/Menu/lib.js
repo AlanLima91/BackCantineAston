@@ -2,6 +2,15 @@ const _= require('lodash');
 const { ObjectID } = require('mongodb');
 const { Menu } = require('../../models/Menu');
 
+
+const days = [
+    'Lundi',
+    'Mardi',
+    'Mercredi',
+    'Jeudi',
+    'Vendredi'
+]
+
 // CREATE
 function addMenu(req, res) {
     // console.log('req.body',req.body);
@@ -41,6 +50,26 @@ function getOneMenu(req, res) {
             return res.status(404).send()
         }
         res.status(200).send({menu})
+    })
+    .catch( err => {
+        res.status(400).send(err)
+    })
+}
+function getMenusByProps(req, res) {
+    var prop = req.params.prop
+    var value = req.params.value;
+    var QueryParam = {}
+    QueryParam[prop] = value
+    // if(_.indexOf(days, day) < 0) {
+    //     return res.status(400).send()
+    // }
+    console.log(prop)
+    Menu.find(QueryParam).then(menus => {
+        if (menus.length === 0) {
+            return res.status(404).send()
+        }
+        
+        res.status(200).send({menus})
     })
     .catch( err => {
         res.status(400).send(err)
@@ -87,5 +116,6 @@ function deleteMenu(req, res) {
 exports.addMenu = addMenu;
 exports.getMenus = getMenus;
 exports.getOneMenu = getOneMenu;
+exports.getMenusByProps = getMenusByProps;
 exports.editMenu = editMenu;
 exports.deleteMenu = deleteMenu;
