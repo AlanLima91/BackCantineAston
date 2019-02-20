@@ -26,7 +26,7 @@ function logIn(req, res) {
       })
     })
     .catch(err => {
-      res.status(400).send();
+      res.status(400).send(err);
     })
   
 }

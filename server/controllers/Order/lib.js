@@ -6,7 +6,7 @@ const { Menu } = require('../../models/Menu');
 
 // CREATE
 function addOrder(req, res) {
-    // console.log('req.body',req.body);
+    console.log('req.body',req.body);
 
     var userId = req.body.userKey;
     var menusId = req.body.menuKeys

@@ -63,7 +63,7 @@ function getMenusByProps(req, res) {
     // if(_.indexOf(days, day) < 0) {
     //     return res.status(400).send()
     // }
-    console.log(prop)
+    // console.log(prop)
     Menu.find(QueryParam).then(menus => {
         if (menus.length === 0) {
             return res.status(404).send()
@@ -72,7 +72,7 @@ function getMenusByProps(req, res) {
         res.status(200).send({menus})
     })
     .catch( err => {
-        res.status(400).send(err)
+        res.status(400).send('test')
     })
 }
 

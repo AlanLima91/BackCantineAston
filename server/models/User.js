@@ -94,7 +94,7 @@ UserSchema.statics.findByCredentials = function (email, password) {
         if (!user) {
             //   console.log(user);
 
-            return Promise.reject(); // reject immédiat
+            return Promise.reject(''); // reject immédiat
         }
         // si utilisateur trouvé
         return new Promise((resolve, reject) => {
